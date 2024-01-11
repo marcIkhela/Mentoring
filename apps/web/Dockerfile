@@ -63,6 +63,6 @@ EXPOSE ${WEB_PORT}
 WORKDIR /app
 COPY --from=sourcer /app/ .
 WORKDIR /app/apps/web/
-EXPOSE 3000
+EXPOSE ${WEB_LOCAL_PORT}
 CMD [ "npm", "run", "dev" ]
 
