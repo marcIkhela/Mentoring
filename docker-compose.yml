@@ -4,6 +4,7 @@ x-common-variable: &common-varibles
 # put the common variable here
 
 services:
+
   web:
     stdin_open: true
     tty: true
@@ -20,8 +21,8 @@ services:
     ports:
       - $WEB_lOCAL_PORT: $WEB_DOCKER_PORT 
     networks:
-      # - app_network
-      - default 
+      - app_network
+      # - default 
   api:
     stdin_open: true
     tty: true
@@ -96,6 +97,9 @@ volumes:
   postgres-volume:
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
+volumes:
+  postgres_data:
+
 networks:
   app_network:
     # external: true
