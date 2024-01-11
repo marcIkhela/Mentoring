@@ -68,3 +68,6 @@ This Turborepo has some additional tools already setup for you:
 - [ESLint](https://eslint.org/) for code linting
 - [Jest](https://jestjs.io) test runner for all things JavaScript
 - [Prettier](https://prettier.io) for code formatting
+
+Run npm i --save-dev webpack-node-externals run-script-webpack-plugin webpack
+Add the following npm script to dockerized-full-stack-environment/nestjs-app/package.json file:

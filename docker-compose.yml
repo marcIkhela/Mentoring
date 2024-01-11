@@ -1,28 +1,105 @@
 version: "3"
+
+x-common-variable: &common-varibles 
+# put the common variable here
+
 services:
   web:
+    stdin_open: true
+    tty: true
     container_name: web
     build:
       context: .
       dockerfile: ./apps/web/Dockerfile
     restart: always
+    volumes: 
+      - /app/node_modules
+      - /web:/app
+      - /app/.next
+
     ports:
-      - 3000:3000
+      - $WEB_lOCAL_PORT: $WEB_DOCKER_PORT 
     networks:
-      - app_network
+      # - app_network
+      - default 
   api:
+    stdin_open: true
+    tty: true
     container_name: api
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
+    depends_on:
+      - postgres
+      - redis
+    environment: 
+      # put every environment variable 
+
+  # adapter ça en fonction de ton environnement
+    volumes:
+      - /app/node_modules
+      - /api:app
     restart: always
     ports:
-      - 3001:3001
+      - $API_LOCAL_PORT: $API_DOCKER_PORT
     networks:
       - app_network
+      # - default
+    
+    ngnix: 
+      container_name: ngnix
+      build: 
+        dockerfile: ./apps/ngnix/Dockerfile
+        context: ./apps/ngnix
+        ports:
+          - $NGNIX_LOCAL_PORT: $NGNIX_DOCKER_PORT
+      depends_on: 
+        - web
+        - api
+        - postgres
+      restart: always
+      networks:
+      - app_network
+      # - default
+    
+    redis: 
+      image: redis:lastes
+      volumes: 
+        -.apps/data/redis:/data
+      ports: 
+        - $REDIS_LOCAL_PORT : $REDIS_DOCKER_PORT
+      networks:
+      - app_network
+      # - default
 
+    postgres:
+      image: postgres:alpine
+      container_name: postgres
+      restart: always
+      ports:
+        - $PG_LOCAL_PORT: $PG_DOCKER_PORT
+      # env_file:
+        #
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_DB=$PG_DB 
+        - POSTGRES_USER=$PG_USER
+        - POSTGRES_PASSWORD=$PG_PASSWORD
+      networks:
+      - app_network
+      # - default
+
+  
+
+volumes: 
+  postgres-volume:
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
 networks:
   app_network:
-    external: true
+    # external: true
+    driver: bridge
+
+
+
