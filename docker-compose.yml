@@ -6,7 +6,7 @@ x-common-variable: &common-varibles
 services:
 
   web:
-    stdin_open: true
+    stdin_open: true  
     tty: true
     container_name: web
     build:
