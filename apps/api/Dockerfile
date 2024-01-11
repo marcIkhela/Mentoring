@@ -54,7 +54,7 @@ USER nestjs
 COPY --from=installer /app .
 WORKDIR /app
 WORKDIR /app/apps/api/
-EXPOSE ${API_PORT}
-CMD npm run dev
-# CMD [ "node", "apps/api/dist/src/main.js" ]
+EXPOSE ${API_LOCAL_PORT}
+# CMD npm run dev
+CMD [ "node", "apps/api/dist/src/main.js" ]
 
