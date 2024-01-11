@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   web:
     container_name: web
     build:
@@ -9,7 +10,8 @@ services:
     ports:
       - 3000:3000
     networks:
-      - app_network
+      - default
+
   api:
     container_name: api
     build:
@@ -19,10 +21,26 @@ services:
     ports:
       - 3001:3001
     networks:
-      - app_network
+      - default
+
+  db:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=mentorat
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=ikhela
+    networks:
+      - default
 
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
+volumes:
+  postgres_data:
+
 networks:
   app_network:
     external: true

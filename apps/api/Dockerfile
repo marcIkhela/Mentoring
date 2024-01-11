@@ -9,7 +9,7 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 # Set working directory
 WORKDIR /app
-RUN npm install --global turbo
+RUN npm install turbo --global
 COPY . .
 RUN turbo prune api --docker
 
@@ -19,15 +19,20 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
 
+
 # First install dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
+COPY --from=builder /app/turbo.json ./turbo.json
+COPY --from=builder /app/apps/api/prisma ./prisma
 RUN npm install
+RUN npx prisma generate 
+
 
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
-COPY turbo.json turbo.json
+# COPY turbo.json turbo.json
 
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
@@ -36,7 +41,8 @@ COPY turbo.json turbo.json
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN npm turbo build --filter=api...
+RUN npx turbo build --filter=api...
+
 
 FROM base AS runner
 WORKDIR /app
@@ -48,4 +54,11 @@ USER nestjs
 COPY --from=installer /app .
 
 
-CMD ["npm", "start:dev"]
+FROM base as runner
+WORKDIR /app
+COPY --from=sourcer /app/ .
+WORKDIR /app/apps/api/
+EXPOSE 3001
+CMD npm run dev
+# CMD [ "node", "apps/api/dist/src/main.js" ]
+

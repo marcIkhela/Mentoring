@@ -9,7 +9,8 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 # Set working directory
 WORKDIR /app
-RUN npm install --global turbo
+RUN npm install turbo --global
+
 COPY . .
 RUN turbo prune web --docker
 
@@ -23,11 +24,13 @@ WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
+COPY --from=builder /app/turbo.json ./turbo.json
 RUN npm install
 
 # Build the project
 COPY --from=builder /app/out/full/ .
-COPY turbo.json turbo.json
+# COPY turbo.json turbo.json
+
 
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
@@ -36,7 +39,8 @@ COPY turbo.json turbo.json
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN npm turbo build --filter=web...
+RUN npx turbo build --filter=web...
+RUN ls -l
 
 FROM base AS runner
 WORKDIR /app
@@ -51,8 +55,13 @@ COPY --from=installer /app/apps/web/package.json .
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+# COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
-CMD [ "npm", "dev"]
+WORKDIR /app
+COPY --from=sourcer /app/ .
+WORKDIR /app/apps/web/
+EXPOSE 3000
+CMD [ "npm", "run", "dev" ]
+
