@@ -1,56 +1,55 @@
 version: "3"
 
 x-common-variable: &common-varibles 
+x-defaults:
+  &defaults
+  networks:
+    - app_network
+  env_file:
+      - ./.env
 # put the common variable here
 
 services:
 
   web:
-    stdin_open: true  
-    tty: true
+    <<: *defaults
     container_name: web
     build:
-      context: .
+      # context: .
       dockerfile: ./apps/web/Dockerfile
     restart: always
     volumes: 
-      - /app/node_modules
-      - /web:/app
+      - ./apps/web:/app/apps/web
+      - /app/apps/web/node_modules
       - /app/.next
 
     ports:
       - $WEB_lOCAL_PORT:$WEB_DOCKER_PORT 
-    networks:
-      - app_network
-      # - default 
+
   api:
-    stdin_open: true
-    tty: true
+    <<: *defaults
     container_name: api
     build:
-      context: .
+      # context: .
       dockerfile: ./apps/api/Dockerfile
     depends_on:
       - postgres
       - redis
-
-
   # adapter ça en fonction de ton environnement
     volumes:
-      - /app/node_modules
-      - /api:/app
+      - ./apps/api:/app/apps/api
+      - /app/apps/apinode_modules
     restart: always
     ports:
       - $API_LOCAL_PORT:$API_DOCKER_PORT
-    networks:
-      - app_network
-      # - default
+
     
   ngnix : 
+    <<: *defaults
     container_name: ngnix
     build: 
       dockerfile: ./apps/ngnix/Dockerfile
-      context: .
+      context: ./apps/nginx    
     ports:
       - $NGNIX_LOCAL_PORT:$NGNIX_DOCKER_PORT
     depends_on: 
@@ -58,21 +57,20 @@ services:
       - api
       - postgres
     restart: always
-    networks:
-    - app_network
-    # - default
+   
     
   redis: 
+    <<: *defaults
     image: redis:7.2.4-alpine
     volumes: 
       - ./apps/data/redis:/data
     ports: 
       - $REDIS_LOCAL_PORT:$REDIS_DOCKER_PORT
-    networks:
-    - app_network
+   
     # - default
 
   postgres:
+    <<: *defaults
     image: postgres:alpine
     container_name: postgres
     restart: always
@@ -86,9 +84,7 @@ services:
       - POSTGRES_DB=$PG_DB 
       - POSTGRES_USER=$PG_USER
       - POSTGRES_PASSWORD=$PG_PASSWORD
-    networks:
-    - app_network
-    # - default
+ 
 
   
 
@@ -99,8 +95,8 @@ volumes:
 
 networks:
   app_network:
-    # external: true
-    driver: bridge
+    external: true
+    # driver: bridge
 
 
 

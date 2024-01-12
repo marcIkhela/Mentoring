@@ -43,7 +43,6 @@ COPY --from=builder /app/out/full/ .
 
 RUN npx turbo build --filter=api...
 
-
 FROM base AS runner
 WORKDIR /app
 
@@ -51,10 +50,7 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nestjs
 RUN adduser --system --uid 1001 nestjs
 USER nestjs
-COPY --from=installer /app .
-WORKDIR /app
-WORKDIR /app/apps/api/
+
 EXPOSE ${API_LOCAL_PORT}
-# CMD npm run dev
-CMD [ "node", "apps/api/dist/src/main.js" ]
+CMD npm run dev
 
