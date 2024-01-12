@@ -24,6 +24,7 @@ WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
+COPY --from=builder /app/out/package.json ./packagep.json
 COPY --from=builder /app/apps/api/prisma ./prisma
 COPY --from=builder /app/turbo.json ./turbo.json
 
@@ -51,10 +52,7 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nestjs
 RUN adduser --system --uid 1001 nestjs
 USER nestjs
-COPY --from=installer /app .
-WORKDIR /app
-WORKDIR /app/apps/api/
+
 EXPOSE ${API_LOCAL_PORT}
-# CMD npm run dev
-CMD [ "node", "apps/api/dist/src/main.js" ]
+CMD npm run dev
 

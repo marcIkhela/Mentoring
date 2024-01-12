@@ -33,12 +33,11 @@ services:
     depends_on:
       - postgres
       - redis
-
-
   # adapter ça en fonction de ton environnement
     volumes:
       - /app/node_modules
       - /api:/app
+    
     restart: always
     ports:
       - $API_LOCAL_PORT:$API_DOCKER_PORT
