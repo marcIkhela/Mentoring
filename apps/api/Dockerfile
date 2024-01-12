@@ -44,7 +44,6 @@ COPY --from=builder /app/out/full/ .
 
 RUN npx turbo build --filter=api...
 
-
 FROM base AS runner
 WORKDIR /app
 

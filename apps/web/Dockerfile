@@ -23,6 +23,7 @@ WORKDIR /app
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
+COPY apps/api/package.json /app/apps/api/package.json
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
 COPY --from=builder /app/turbo.json ./turbo.json
 RUN npm install
@@ -40,7 +41,6 @@ COPY --from=builder /app/out/full/ .
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
 RUN npx turbo build --filter=web...
-RUN ls -l
 
 FROM base AS runner
 WORKDIR /app
@@ -59,6 +59,10 @@ COPY --from=installer /app/apps/web/package.json .
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
+<<<<<<< HEAD
 EXPOSE ${WEB_PORT}
+=======
+EXPOSE ${WEB_LOCAL_PORT}
+>>>>>>> 31c5af65198c2bcb91240714889a9f721b25c114
 CMD [ "npm", "run", "dev" ]
 
