@@ -32,9 +32,9 @@ services:
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
-    depends_on:
-      - postgres
-      - redis
+    # depends_on:
+    #   - postgres
+    #   - redis
   # adapter ça en fonction de ton environnement
     # volumes:
     #   - ./apps/api:/app/apps/api
