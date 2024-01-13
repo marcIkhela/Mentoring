@@ -75,7 +75,7 @@ services:
       # dockerfile: Dockerfile
     restart: always
     ports:
-      - $PG_LOCAL_PORT:$PG_DOCKER_PORT
+      - "5434:5432"
     # env_file:
       #
     # # volumes:
@@ -87,6 +87,8 @@ services:
       - POSTGRES_PASSWORD=$PG_PASSWORD
       - POSTGRES_SUPER_USER=$PG_USER
       - POSTGRES_SUPER_PASSWORD=$PG_USER
+    networks:
+    - app_network
  
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
