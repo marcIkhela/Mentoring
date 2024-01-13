@@ -44,28 +44,28 @@ services:
       - $API_LOCAL_PORT:$API_DOCKER_PORT
 
     
-  ngnix : 
-    <<: *defaults
-    container_name: ngnix
-    build: 
-      context: .
-      dockerfile: ./apps/api/ngnix/Dockerfile
-    ports:
-      - $NGNIX_LOCAL_PORT:$NGNIX_DOCKER_PORT
-    depends_on: 
-      - web
-      - api
-      - postgres
-    restart: always
+  # ngnix : 
+  #   <<: *defaults
+  #   container_name: ngnix
+  #   build: 
+  #     context: .
+  #     dockerfile: ./apps/api/ngnix/Dockerfile
+  #   ports:
+  #     - $NGNIX_LOCAL_PORT:$NGNIX_DOCKER_PORT
+  #   depends_on: 
+  #     - web
+  #     - api
+  #     - postgres
+  #   restart: always
    
     
-  redis: 
-    <<: *defaults
-    image: redis:7.2.4-alpine
-    volumes: 
-      - ./apps/data/redis:/data
-    ports: 
-      - $REDIS_LOCAL_PORT:$REDIS_DOCKER_PORT
+  # redis: 
+  #   <<: *defaults
+  #   image: redis:7.2.4-alpine
+  #   volumes: 
+  #     - ./apps/data/redis:/data
+  #   ports: 
+  #     - $REDIS_LOCAL_PORT:$REDIS_DOCKER_PORT
    
     # - default
 
@@ -78,8 +78,8 @@ services:
       - $PG_LOCAL_PORT:$PG_DOCKER_PORT
     # env_file:
       #
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=$PG_DB 
       - POSTGRES_USER=$PG_USER
@@ -90,8 +90,8 @@ services:
 
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:
 
 networks:
   app_network:
