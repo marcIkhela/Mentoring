@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:21-alpine AS base
 
 # This Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update both files!
@@ -12,7 +12,7 @@ WORKDIR /app
 
 
 WORKDIR /app
-RUN npm install turbo --global
+# RUN npm install turbo --global
 
 COPY . .
 RUN npm install
@@ -26,17 +26,17 @@ RUN npm install
 # WORKDIR /app
 
 # First install the dependencies (as they change less often)
-COPY .gitignore .gitignore
+# COPY .gitignore .gitignore
 # COPY --from=builder /app/out/json/ .
 # COPY apps/api/package.json /app/apps/api/package.json
 # COPY --from=builder /app/out/package-lock.json ./package-lock.json
 # COPY --from=builder /app/turbo.json ./turbo.json
-RUN npm install
+# RUN npm install
 
 
 # Build the project
 # COPY --from=builder /app/out/full/ .
-COPY turbo.json turbo.json
+# COPY turbo.json turbo.json
 
 
 # Uncomment and use build args to enable remote caching
@@ -46,7 +46,7 @@ COPY turbo.json turbo.json
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN npx turbo build --filter=web...
+# RUN npx turbo build --filter=web...
 
 # FROM base AS runner
 # WORKDIR /app
