@@ -15,8 +15,8 @@ services:
     <<: *defaults
     container_name: web
     build:
-      context: .
-      dockerfile: ./apps/web/Dockerfile
+      context: ./apps/web
+      # dockerfile: Dockerfile
     restart: always
     # volumes: 
     #   - ./apps/web:/app/apps/web
@@ -30,8 +30,8 @@ services:
     <<: *defaults
     container_name: api
     build:
-      context: .
-      dockerfile: ./apps/api/Dockerfile
+      context: ./apps/api
+      # dockerfile: Dockerfile
     # depends_on:
     #   - postgres
     #   - redis
@@ -71,8 +71,11 @@ services:
 
   postgres:
     <<: *defaults
-    image: postgres:alpine
+    # image: postgres:alpine
     container_name: postgres
+    build: 
+      context: ./apps/db/
+      # dockerfile: Dockerfile
     restart: always
     ports:
       - $PG_LOCAL_PORT:$PG_DOCKER_PORT
@@ -84,10 +87,8 @@ services:
       - POSTGRES_DB=$PG_DB 
       - POSTGRES_USER=$PG_USER
       - POSTGRES_PASSWORD=$PG_PASSWORD
+      - $PG_LOCAL_PORT=$PG_LOCAL_PORT
  
-
-  
-
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
 # volumes:

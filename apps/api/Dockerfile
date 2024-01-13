@@ -9,9 +9,9 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 # Set working directory
 WORKDIR /app
-WORKDIR /app/apps/api
-RUN npx prisma generate
-WORKDIR /app
+# WORKDIR /app/apps/api
+# RUN npx prisma generate
+
 # RUN npm install turbo --global
 COPY . .
 # RUN turbo prune api --docker
@@ -32,6 +32,7 @@ COPY . .
 # RUN npx prisma generate 
 # RUN npx prisma db push
 RUN npm install
+RUN npx prisma generate
 
 
 # Build the project and its dependencies
