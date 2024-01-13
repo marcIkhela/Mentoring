@@ -56,7 +56,7 @@ RUN npm install
 # RUN adduser --system --uid 1001 nextjs
 # USER nextjs
 
-# COPY --from=installer /app/apps/web/next.config.js .
+# COPY --from=insta ller /app/apps/web/next.config.js .
 # COPY --from=installer /app/apps/web/package.json .
 
 # Automatically leverage output traces to reduce image size

@@ -1,8 +1,7 @@
 version: "3"
 
-x-common-variable: &common-varibles 
-x-defaults:
-  &defaults
+
+x-defaults: &defaults
   networks:
     - app_network
   env_file:
@@ -12,7 +11,6 @@ x-defaults:
 services:
 
   web:
-    <<: *defaults
     container_name: web
     build:
       context: ./apps/web
@@ -22,12 +20,11 @@ services:
     #   - ./apps/web:/app/apps/web
     #   - /app/apps/web/node_modules
     #   - /app/.next
-
+    <<: *defaults
     ports:
       - $WEB_lOCAL_PORT:$WEB_DOCKER_PORT 
 
   api:
-    <<: *defaults
     container_name: api
     build:
       context: ./apps/api
@@ -39,6 +36,7 @@ services:
     # volumes:
     #   - ./apps/api:/app/apps/api
     #   - /app/apps/apinode_modules
+    <<: *defaults
     restart: always
     ports:
       - $API_LOCAL_PORT:$API_DOCKER_PORT
@@ -70,24 +68,25 @@ services:
     # - default
 
   postgres:
-    <<: *defaults
     # image: postgres:alpine
     container_name: postgres
     build: 
-      context: ./apps/db/
+      context: ./apps/db
       # dockerfile: Dockerfile
     restart: always
     ports:
       - $PG_LOCAL_PORT:$PG_DOCKER_PORT
     # env_file:
       #
-    # volumes:
-    #   - postgres_data:/var/lib/postgresql/data
+    # # volumes:
+    # #   - postgres_data:/var/lib/postgresql/data
+    <<: *defaults
     environment:
       - POSTGRES_DB=$PG_DB 
       - POSTGRES_USER=$PG_USER
       - POSTGRES_PASSWORD=$PG_PASSWORD
-      - $PG_LOCAL_PORT=$PG_LOCAL_PORT
+      - POSTGRES_SUPER_USER=$PG_USER
+      - POSTGRES_SUPER_PASSWORD=$PG_USER
  
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
