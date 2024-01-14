@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:21-alpine AS base
 
 # This Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update both files!
@@ -9,9 +9,14 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 # Set working directory
 WORKDIR /app
-RUN npm install turbo --global
+
+
+WORKDIR /app
+# RUN npm install turbo --global
 
 COPY . .
+RUN npm install
+
 # RUN turbo prune web --docker
 
 # Add lockfile and package.json's of isolated subworkspace
@@ -21,13 +26,13 @@ COPY . .
 # WORKDIR /app
 
 # First install the dependencies (as they change less often)
-COPY .gitignore .gitignore
+# COPY .gitignore .gitignore
 # COPY --from=builder /app/out/json/ .
 # COPY apps/api/package.json /app/apps/api/package.json
 # COPY --from=builder /app/out/package-lock.json ./package-lock.json
 # COPY --from=builder /app/turbo.json ./turbo.json
-# COPY /app/turbo.json ./turbo.json
-RUN npm install
+# RUN npm install
+
 
 # Build the project
 # COPY --from=builder /app/out/full/ .
@@ -41,7 +46,7 @@ RUN npm install
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN npx turbo build --filter=web...
+# RUN npx turbo build --filter=web...
 
 # FROM base AS runner
 # WORKDIR /app
@@ -51,7 +56,7 @@ RUN npx turbo build --filter=web...
 # RUN adduser --system --uid 1001 nextjs
 # USER nextjs
 
-# COPY --from=installer /app/apps/web/next.config.js .
+# COPY --from=insta ller /app/apps/web/next.config.js .
 # COPY --from=installer /app/apps/web/package.json .
 
 # Automatically leverage output traces to reduce image size

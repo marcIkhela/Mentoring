@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:21-alpine AS base
 
 # The web Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update this Dockerfile, the Dockerfile in the web workspace and copy that over to Dockerfile in the docs.
@@ -9,7 +9,10 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 # Set working directory
 WORKDIR /app
-RUN npm install turbo --global
+# WORKDIR /app/apps/api
+# RUN npx prisma generate
+
+# RUN npm install turbo --global
 COPY . .
 # RUN turbo prune api --docker
 
@@ -31,7 +34,8 @@ COPY . .
 # COPY /apps/turbo.json ./turbo.json
 
 RUN npm install
-RUN npx prisma generate 
+RUN npx prisma generate
+
 
 # Build the project and its dependencies
 # COPY --from=builder /app/out/full/ .
@@ -44,7 +48,7 @@ RUN npx prisma generate
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN npx turbo build --filter=api...
+# RUN npx turbo build --filter=api...
 
 # FROM base AS runner
 # WORKDIR /app
@@ -53,7 +57,6 @@ RUN npx turbo build --filter=api...
 # RUN addgroup --system --gid 1001 nestjs
 # RUN adduser --system --uid 1001 nestjs
 # USER nestjs
-
 EXPOSE ${API_LOCAL_PORT}
-CMD npm run dev
-
+# ENTRYPOINT [ "/bin/sh"; "-c","npx prisma generate" ]
+CMD ["npm", "run", "dev"]
