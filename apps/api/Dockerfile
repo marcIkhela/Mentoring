@@ -35,6 +35,7 @@ COPY . .
 
 RUN npm install
 RUN npx prisma generate
+# RUN npx prisma db push
 
 
 # Build the project and its dependencies

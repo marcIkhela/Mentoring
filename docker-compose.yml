@@ -2,6 +2,7 @@ version: "3"
 
 
 x-defaults: &defaults
+  # network_mode: "host"
   networks:
     - app_network
   env_file:
@@ -9,6 +10,39 @@ x-defaults: &defaults
 # put the common variable here
 
 services:
+
+  db:
+    image: postgres:alpine
+    container_name: db
+    restart: always
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    <<: *defaults
+    environment:
+      - POSTGRES_DB=mentorat
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=ikhela
+   
+   
+
+  adminer:
+    image: adminer
+    depends_on:
+      - db
+    ports:
+      - 8081:8080
+    networks:
+      - app_network
+    
+    <<: *defaults
+    healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres"]
+          interval: 5s
+          timeout: 5s
+          retries: 5
 
   web:
     container_name: web
@@ -27,11 +61,11 @@ services:
   api:
     container_name: api
     build:
-      context: ./apps/api
+      context: ./apps/api/
+    
       # dockerfile: Dockerfile
     # depends_on:
-    #   - postgres
-    #   - redis
+    #   - db
   # adapter ça en fonction de ton environnement
     # volumes:
     #   - /app/node_modules
@@ -67,38 +101,36 @@ services:
    
     # - default
 
-  postgres:
-    # image: postgres:alpine
-    container_name: postgres
-    build: 
-      context: ./apps/db
-      # dockerfile: Dockerfile
-    restart: always
-    ports:
-      - "5434:5432"
+  # postgres:
+  #   image: postgres
+  #   container_name: postgres
+  #   build: 
+  #     context: ./apps/db
+    #   # dockerfile: Dockerfile
+    # restart: always
+    # ports:
+    #   - "5434:5432"
     # env_file:
       #
     # # volumes:
     # #   - postgres_data:/var/lib/postgresql/data
-    <<: *defaults
-    environment:
-      - POSTGRES_DB=$PG_DB 
-      - POSTGRES_USER=$PG_USER
-      - POSTGRES_PASSWORD=$PG_PASSWORD
-      - POSTGRES_SUPER_USER=$PG_USER
-      - POSTGRES_SUPER_PASSWORD=$PG_USER
-    networks:
-    - app_network
+    # <<: *defaults
+    # environment:
+    #   - POSTGRES_DB=$PG_DB 
+    #   - POSTGRES_USER=$PG_USER
+    #   - POSTGRES_PASSWORD=$PG_PASSWORD
+    #   - POSTGRES_SUPER_USER=$PG_USER
+    #   - POSTGRES_SUPER_PASSWORD=$PG_USER
+    # networks:
+    # - app_network
+
  
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
-# volumes:
-#   postgres_data:
+# # Define a network, which allows containers to communicate
+# # with each other, by using their container name as a hostname
+volumes:
+  postgres_data:
 
 networks:
   app_network:
     external: true
-    # driver: bridge
-
-
-
+    
