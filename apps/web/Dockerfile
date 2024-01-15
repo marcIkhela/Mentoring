@@ -11,7 +11,6 @@ RUN apk update
 WORKDIR /app
 
 
-WORKDIR /app
 # RUN npm install turbo --global
 
 COPY . .
