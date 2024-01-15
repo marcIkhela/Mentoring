@@ -64,6 +64,7 @@ RUN npm install
 # COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 # COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
-EXPOSE ${WEB_LOCAL_PORT}
+EXPOSE ${WEB_PORT}
+
 CMD [ "npm", "run", "dev" ]
 

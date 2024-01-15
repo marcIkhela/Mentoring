@@ -27,10 +27,12 @@ COPY . .
 # COPY .gitignore .gitignore
 # COPY --from=builder /app/out/json/ .
 # COPY --from=builder /app/out/package-lock.json ./package-lock.json
+# COPY --from=builder /app/out/package.json ./packagep.json
 # COPY --from=builder /app/apps/api/prisma ./prisma
 # COPY --from=builder /app/turbo.json ./turbo.json
-# RUN npx prisma generate 
-# RUN npx prisma db push
+# COPY  /apps/api/prisma ./prisma
+# COPY /apps/turbo.json ./turbo.json
+
 RUN npm install
 RUN npx prisma generate
 # RUN npx prisma db push

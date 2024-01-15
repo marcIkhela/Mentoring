@@ -68,9 +68,9 @@ services:
     #   - db
   # adapter ça en fonction de ton environnement
     # volumes:
-    #   - ./apps/api:/app/apps/api
-    #   - /app/apps/apinode_modules
-    <<: *defaults
+    #   - /app/node_modules
+    #   - /api:/app
+    
     restart: always
     ports:
       - $API_LOCAL_PORT:$API_DOCKER_PORT
