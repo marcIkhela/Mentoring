@@ -2,133 +2,75 @@ version: "3"
 
 
 x-defaults: &defaults
-  # network_mode: "host"
+  # target: developement
   networks:
-    - app_network
+    - ${NETWORK_CONTAINER}
   env_file:
       - ./.env
+  
 
 services:
-
   db:
-    image: postgres:alpine
+    image: ${PG_IMG}
     container_name: db
     restart: always
     ports:
-      - 5433:5432
+      - ${PG_LOCAL_PORT}:${PG_DOCKER_PORT}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - .apps/db/:/docker-entrypoint-initdb.d  
+      #NODE_ENV=production a 
 
     <<: *defaults
     environment:
-      - POSTGRES_DB=mentorat
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=ikhela
+      - POSTGRES_DB=${PG_DB}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
 
   adminer:
-    image: adminer
+    image: ${ADMINER_IMG}
     depends_on:
       - db
     ports:
-      - 8081:8080
-    networks:
-      - app_network
-    
+      - ${ADMINER_LOCAL_PORT}:${ADMINER_DOCKER_PORT}
     <<: *defaults
-    healthcheck:
-          test: ["CMD-SHELL", "pg_isready -U postgres"]
-          interval: 5s
-          timeout: 5s
-          retries: 5
+    # healthcheck:
+    #       test: ["CMD-SHELL", "pg_isready -U postgres"]
+    #       interval: 5s
+    #       timeout: 5s
+    #       retries: 5
 
   web:
-    container_name: web
+    container_name: ${WEB_NAME}
     build:
-      context: ./apps/web
-      # dockerfile: Dockerfile
+      context: ./apps/${WEB_NAME}
     restart: always
-    # volumes: 
-    #   - ./apps/web:/app/apps/web
-    #   - /app/apps/web/node_modules
-    #   - /app/.next
     <<: *defaults
     ports:
-      - $WEB_lOCAL_PORT:$WEB_DOCKER_PORT 
+      - ${WEB_lOCAL_PORT}:${WEB_DOCKER_PORT} 
+    volumes:
+      - ./apps/${WEB_NAME}:/app/${WEB_NAME}
+      - /app/apps/${WEB_NAME}/node_modules
 
   api:
-    container_name: api
+    container_name: ${API_NAME}
     build:
-      context: ./apps/api/
-    
-      # dockerfile: Dockerfile
+      context: ./apps/${API_NAME}
     <<: *defaults
     depends_on:
-      - db
-  # adapter ça en fonction de ton environnement
-    # volumes:
-    #   - /app/node_modules
-    #   - /api:/app
-    
+      - db    
     restart: always
     ports:
-      - $API_LOCAL_PORT:$API_DOCKER_PORT
-
-    
-  # ngnix : 
-  #   <<: *defaults
-  #   container_name: ngnix
-  #   build: 
-  #     context: .
-  #     dockerfile: ./apps/api/ngnix/Dockerfile
-  #   ports:
-  #     - $NGNIX_LOCAL_PORT:$NGNIX_DOCKER_PORT
-  #   depends_on: 
-  #     - web
-  #     - api
-  #     - postgres
-  #   restart: always
-
-    
-  # redis: 
-  #   <<: *defaults
-  #   image: redis:7.2.4-alpine
-  #   volumes: 
-  #     - ./apps/data/redis:/data
-  #   ports: 
-  #     - $REDIS_LOCAL_PORT:$REDIS_DOCKER_PORT
-
-    # - default
-
-  # postgres:
-  #   image: postgres
-  #   container_name: postgres
-  #   build: 
-  #     context: ./apps/db
-    #   # dockerfile: Dockerfile
-    # restart: always
-    # ports:
-    #   - "5434:5432"
-    # env_file:
-      #
-    # # volumes:
-    # #   - postgres_data:/var/lib/postgresql/data
-    # <<: *defaults
-    # environment:
-    #   - POSTGRES_DB=$PG_DB 
-    #   - POSTGRES_USER=$PG_USER
-    #   - POSTGRES_PASSWORD=$PG_PASSWORD
-    #   - POSTGRES_SUPER_USER=$PG_USER
-    #   - POSTGRES_SUPER_PASSWORD=$PG_USER
-    # networks:
-    # - app_network
+      - ${API_LOCAL_PORT}:${API_DOCKER_PORT}
+    volumes:
+      - ./apps/${API_NAME}/:/app/{API_NAME}
+      - /app/${API_NAME}/node_modules
 
 
-# # Define a network, which allows containers to communicate
-# # with each other, by using their container name as a hostname
 volumes:
   postgres_data:
 
 networks:
-  app_network:
+  ${NETWORK_CONTAINER}:
     external: true
     

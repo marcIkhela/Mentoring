@@ -72,3 +72,9 @@ This Turborepo has some additional tools already setup for you:
 Run npm i --save-dev webpack-node-externals run-script-webpack-plugin webpack
 Add the following npm script to dockerized-full-stack-environment/nestjs-app/package.json file:
 
+  "build:back": "docker-compose build nestjs-app",
+    "build:front": "docker-compose build nextjs-app",
+    "start:db": "docker-compose up mysql-db",
+    "start:back": "docker-compose up nestjs-app --renew-anon-volumes",
+    "start:front": "docker-compose up nextjs-app --renew-anon-volumes",
+    "clean": "docker-compose down -v"

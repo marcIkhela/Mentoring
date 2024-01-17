@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 
-
+    output: 'standalone',
     // // for winston
     // future: {
     //     webpack5: false,
