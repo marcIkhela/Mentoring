@@ -7,7 +7,6 @@ x-defaults: &defaults
     - app_network
   env_file:
       - ./.env
-# put the common variable here
 
 services:
 
@@ -25,8 +24,6 @@ services:
       - POSTGRES_DB=mentorat
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=ikhela
-   
-   
 
   adminer:
     image: adminer
@@ -64,8 +61,9 @@ services:
       context: ./apps/api/
     
       # dockerfile: Dockerfile
-    # depends_on:
-    #   - db
+    <<: *defaults
+    depends_on:
+      - db
   # adapter ça en fonction de ton environnement
     # volumes:
     #   - /app/node_modules
@@ -89,7 +87,7 @@ services:
   #     - api
   #     - postgres
   #   restart: always
-   
+
     
   # redis: 
   #   <<: *defaults
@@ -98,7 +96,7 @@ services:
   #     - ./apps/data/redis:/data
   #   ports: 
   #     - $REDIS_LOCAL_PORT:$REDIS_DOCKER_PORT
-   
+
     # - default
 
   # postgres:
@@ -124,7 +122,7 @@ services:
     # networks:
     # - app_network
 
- 
+
 # # Define a network, which allows containers to communicate
 # # with each other, by using their container name as a hostname
 volumes:

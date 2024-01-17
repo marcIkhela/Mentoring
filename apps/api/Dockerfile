@@ -9,8 +9,6 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 # Set working directory
 WORKDIR /app
-# WORKDIR /app/apps/api
-# RUN npx prisma generate
 
 # RUN npm install turbo --global
 COPY . .
@@ -35,8 +33,7 @@ COPY . .
 
 RUN npm install
 RUN npx prisma generate
-# RUN npx prisma db push
-
+RUN npx prisma db push
 
 # Build the project and its dependencies
 # COPY --from=builder /app/out/full/ .
@@ -54,10 +51,10 @@ RUN npx prisma generate
 # FROM base AS runner
 # WORKDIR /app
 
-# Don't run production as root
+# Don't run productionnù as root
 # RUN addgroup --system --gid 1001 nestjs
 # RUN adduser --system --uid 1001 nestjs
 # USER nestjs
 EXPOSE ${API_LOCAL_PORT}
-# ENTRYPOINT [ "/bin/sh"; "-c","npx prisma generate" ]
+ENTRYPOINT [ "/bin/sh"; "-c","npx prisma generate" ]
 CMD ["npm", "run", "dev"]
