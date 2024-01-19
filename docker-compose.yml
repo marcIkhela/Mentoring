@@ -18,7 +18,7 @@ services:
       - ${PG_LOCAL_PORT}:${PG_DOCKER_PORT}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - .apps/db/:/docker-entrypoint-initdb.d  
+      - ./apps/db/:/docker-entrypoint-initdb.d  
       #NODE_ENV=production a 
 
     <<: *defaults
@@ -43,7 +43,8 @@ services:
   web:
     container_name: ${WEB_NAME}
     build:
-      context: ./apps/${WEB_NAME}
+      context: .
+      dockerfile: ./apps/${WEB_NAME}/Dockerfile
     restart: always
     <<: *defaults
     ports:
@@ -55,7 +56,8 @@ services:
   api:
     container_name: ${API_NAME}
     build:
-      context: ./apps/${API_NAME}
+      context: .
+      dockerfile: ./apps/${API_NAME}/Dockerfile
     <<: *defaults
     depends_on:
       - db    
@@ -71,6 +73,6 @@ volumes:
   postgres_data:
 
 networks:
-  ${NETWORK_CONTAINER}:
+  app_network:
     external: true
     

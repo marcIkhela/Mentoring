@@ -18,15 +18,16 @@ WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
-COPY --from=builder /app/out/package.json ./package.json
 COPY --from=builder /app/turbo.json ./turbo.json
-COPY --from=builder /app/apps/${API_LOCAL_PORT}/prisma ./prisma
+COPY --from=builder /app/apps/api/prisma ./prisma
 RUN npm install
 RUN npx prisma generate
-RUN npx prisma db push
+# RUN npx prisma db push
+
+# COPY --from=builder /app/apps/api/prisma ./prisma
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-RUN npx turbo build --filter=${API_LOCAL_PORT}
+RUN npx turbo build --filter=api
 
 # final stage runner
 FROM base AS runner
