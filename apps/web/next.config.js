@@ -2,6 +2,7 @@
 const nextConfig = {
 
     output: 'standalone',
+    // outputFileTracingRoot: path.join(__dirname, '../../'),
     // // for winston
     // future: {
     //     webpack5: false,
