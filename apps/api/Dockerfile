@@ -2,7 +2,7 @@ FROM node:21-alpine AS base
 
 # Stage builder
 FROM base AS builder
-RUN apk add --no-cache libc6-compat
+# RUN apk add --no-cache libc6-compat
 # RUN apt-get update && apt-get install -y postgresql-client
 RUN apk update
 WORKDIR /app
@@ -12,13 +12,12 @@ RUN turbo prune api --docker
 
 # stage installer 
 FROM base AS installer
-RUN apk add --no-cache libc6-compat
+# RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
-COPY --from=builder /app/turbo.json ./turbo.json
 COPY --from=builder /app/apps/api/prisma ./prisma
 RUN npm install
 RUN npx prisma generate
@@ -27,7 +26,7 @@ RUN npx prisma generate
 # COPY --from=builder /app/apps/api/prisma ./prisma
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-RUN npx turbo build --filter=api
+RUN npm run build --filter=api...
 
 # final stage runner
 FROM base AS runner

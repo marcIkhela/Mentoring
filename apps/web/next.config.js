@@ -3,7 +3,7 @@ const path = require('path');
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-
+    // https://nextjs.org/docs/pages/api-reference/next-config-js/output
     experimental: {
         // this includes files from the monorepo base two directories up
         outputFileTracingRoot: path.join(__dirname, '../../'),

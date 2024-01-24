@@ -6,3 +6,7 @@ git checkout main
 git merge -X ours xxx-branch
 
 ```
+
+```erreur sur le container web```
+
+ça ne passais pa

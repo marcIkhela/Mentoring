@@ -43,7 +43,9 @@ COPY --from=installer /app/apps/web/next.config.js .
 COPY --from=installer /app/apps/web/package.json .
 
 # Automatically leverage output traces to reduce image size
+# erreur on running server.js https://nextjs.org/docs/pages/api-reference/next-config-js/output
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 

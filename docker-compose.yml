@@ -64,9 +64,9 @@ services:
     restart: always
     ports:
       - ${API_LOCAL_PORT}:${API_DOCKER_PORT}
-    volumes:
-      - ./apps/${API_NAME}/:/app/{API_NAME}
-      - /app/${API_NAME}/node_modules
+    # volumes:
+    #   - ./apps/${API_NAME}/:/app/{API_NAME}
+    #   - /app/${API_NAME}/node_modules
 
 
 volumes:
