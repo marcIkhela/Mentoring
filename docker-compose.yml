@@ -49,9 +49,9 @@ services:
     <<: *defaults
     ports:
       - ${WEB_lOCAL_PORT}:${WEB_DOCKER_PORT} 
-    volumes:
-      - ./apps/${WEB_NAME}:/app/${WEB_NAME}
-      - /app/apps/${WEB_NAME}/node_modules
+    # volumes:
+    #   - ./apps/${WEB_NAME}:/app/${WEB_NAME}
+    #   - /app/apps/${WEB_NAME}/node_modules
 
   api:
     container_name: ${API_NAME}
@@ -64,9 +64,9 @@ services:
     restart: always
     ports:
       - ${API_LOCAL_PORT}:${API_DOCKER_PORT}
-    volumes:
-      - ./apps/${API_NAME}/:/app/{API_NAME}
-      - /app/${API_NAME}/node_modules
+    # volumes:
+    #   - ./apps/${API_NAME}/:/app/{API_NAME}
+    #   - /app/${API_NAME}/node_modules
 
 
 volumes:
