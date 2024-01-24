@@ -48,5 +48,4 @@ COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/we
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
 EXPOSE ${WEB_PORT}
-WORKDIR /app/apps/web/
-CMD node server.js
+CMD node /app/apps/web/server.js

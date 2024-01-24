@@ -1,6 +1,13 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
 
+    experimental: {
+        // this includes files from the monorepo base two directories up
+        outputFileTracingRoot: path.join(__dirname, '../../'),
+    },
     output: 'standalone',
     // outputFileTracingRoot: path.join(__dirname, '../../'),
     // // for winston
@@ -56,6 +63,4 @@ const nextConfig = {
         return config
       },
 }
-
-
 module.exports = nextConfig
