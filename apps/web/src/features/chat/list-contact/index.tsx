@@ -55,7 +55,9 @@ export default function Contact() {
           method: "GET",
         };
 
-        const user = await fetch(`http://localhost:8000/chats/contacts/${session?.user.id}`, options);
+        // const user = await fetch(`http://localhost:8000/chats/contacts/${session?.user.id}`, options);
+        const user = await fetch(`http://api:8000/chats/contacts/${session?.user.id}`, options);
+
         const result = await user.json();
 
         console.log('Message from server:');
@@ -123,7 +125,8 @@ export default function Contact() {
               to: showInfo?.id,
             }),
           }
-        const message = await fetch(`http://localhost:8000/chats/user/${session?.user.id}`, options);
+        // const message = await fetch(`http://localhost:8000/chats/user/${session?.user.id}`, options);
+        const message = await fetch(`http://api:8000/chats/user/${session?.user.id}`, options);
         console.log(message)
 
         if (message.ok){

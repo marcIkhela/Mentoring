@@ -2,7 +2,7 @@ FROM node:21-alpine AS base
 
 # Stage builder
 FROM base AS builder
-# RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat
 # RUN apt-get update && apt-get install -y postgresql-client
 RUN apk update
 WORKDIR /app
@@ -12,7 +12,7 @@ RUN turbo prune api --docker
 
 # stage installer 
 FROM base AS installer
-# RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
 COPY .gitignore .gitignore

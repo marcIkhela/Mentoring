@@ -18,7 +18,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.use(
     cors({
-      origin: 'http://localhost:3000', // Remplacez ceci par l'URL de votre frontend
+      origin: 'http://web:3000', // Remplacez ceci par l'URL de votre frontend
     }),
   );
   // swagger setup
@@ -49,7 +49,7 @@ async function bootstrap() {
   const logger = new Logger('Main');
 
   // log docs
-  const url = `http://localhost:8000`;
+  const url = `http://api:8000`;
   logger.log(`API Document available at ${url}`);
   await app.listen(8000);
 

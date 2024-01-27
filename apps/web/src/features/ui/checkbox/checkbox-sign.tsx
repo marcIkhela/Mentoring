@@ -91,7 +91,8 @@ export const CheickBoxChoice: React.FC<checkbox> = () => {
         body: formdata,
       };
 
-      fetch("http://localhost:8000/auth/register", Options)
+      // fetch("http://localhost:8000/auth/register", Options)
+      fetch("http://api:8000/auth/register", Options)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));

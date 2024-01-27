@@ -26,7 +26,9 @@ const SocketProvider = ({ children }:Props) => {
             const session = await getSession();
 
             if (session?.backendToken.accessToken) {
-                const newSocket = io('http://localhost:8000/chats', {
+                // const newSocket = io('http://localhost:8000/chats', {
+                const newSocket = io('http://api:8000/chats', {
+
                     extraHeaders: {
                         Authorization: `Bearer ${session.backendToken.accessToken}`,
                     },
