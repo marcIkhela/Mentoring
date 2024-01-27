@@ -50,7 +50,7 @@ export default function ListFm() {
                 method: 'GET',
             };
             // const response = await fetch(`http://localhost:8000/chats/user/${session?.user.id}`, Options);
-            const response = await fetch(`http://api:8000/chats/user/${session?.user.id}`, Options)
+            const response = await fetch(`${process.env.NEXt_API}chats/user/${session?.user.id}`, Options)
             const result = await response.json()
             setMessages(regrouperMessagesUtilisateurs(result))
         }
@@ -77,7 +77,7 @@ export default function ListFm() {
                 method: 'GET',
             };
             // const response = await fetch(`http://localhost:8000/messages/chat/${current_chat_id}`, Options);
-            const response = await fetch(`http://api:8000/messages/chat/${current_chat_id}`, Options);
+            const response = await fetch(`${process.env.NEXt_API}/messages/chat/${current_chat_id}`, Options);
             const result: responseGetMessage = await response.json()
             console.log(result)
             function regroupeCurrentChat(data: ChatResult): ChatResult {

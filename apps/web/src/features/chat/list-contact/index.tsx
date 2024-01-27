@@ -56,7 +56,7 @@ export default function Contact() {
         };
 
         // const user = await fetch(`http://localhost:8000/chats/contacts/${session?.user.id}`, options);
-        const user = await fetch(`http://api:8000/chats/contacts/${session?.user.id}`, options);
+        const user = await fetch(`${process.env.NEXt_API}chats/contacts/${session?.user.id}`, options);
 
         const result = await user.json();
 
@@ -126,7 +126,7 @@ export default function Contact() {
             }),
           }
         // const message = await fetch(`http://localhost:8000/chats/user/${session?.user.id}`, options);
-        const message = await fetch(`http://api:8000/chats/user/${session?.user.id}`, options);
+        const message = await fetch(`${process.env.NEXt_API}chats/user/${session?.user.id}`, options);
         console.log(message)
 
         if (message.ok){
