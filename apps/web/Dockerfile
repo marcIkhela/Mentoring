@@ -49,5 +49,9 @@ COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
+# set app host ,port and node env 
+# ENV HOST=0.0.0.0 PORT=3000 NODE_ENV=production
+
+
 EXPOSE ${WEB_PORT}
 CMD node /app/apps/web/server.js
