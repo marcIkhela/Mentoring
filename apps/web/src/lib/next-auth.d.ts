@@ -33,3 +33,13 @@ declare module "next-auth/jwt" {
     };
   }
 }
+
+declare global{
+  namespace NodeJS{
+      interface ProcessEnv{
+          NEXTAUTH_SECRET:string;
+          NEXt_API:string;
+          NEXT_WEB:string;
+      }
+  }
+}
