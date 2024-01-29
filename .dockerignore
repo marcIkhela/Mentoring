@@ -4,5 +4,4 @@
 **/.turbo
 **/Dockerfile 
 docker-compose.yml
-**/.gitignore 
 **/.README.md
