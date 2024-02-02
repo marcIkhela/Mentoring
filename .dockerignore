@@ -4,5 +4,4 @@
 **/.turbo
 **/Dockerfile 
 docker-compose.yml
-**/README.md
-node_modules
+**/.README.md
