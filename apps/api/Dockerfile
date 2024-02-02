@@ -32,14 +32,11 @@ RUN npm run build --filter=api...
 # # final stage runner
 FROM base AS runner
 WORKDIR /app
-# RUN addgroup --system --gid 1001 nestjs
-# RUN adduser --system --uid 1001 nestjs
-# USER nestjs
+RUN addgroup --system --gid 1001 nestjs
+RUN adduser --system --uid 1001 nestjs
+USER nestjs
 COPY --from=installer /app .
 
-RUN rm -rf packages prisma 
-RUN rm -rf apps/api/src
-RUN rm -rf apps/api/prisma
- 
+
 EXPOSE ${API_LOCAL_PORT}
 CMD [ "node", "apps/api/dist/src/main.js"] 
