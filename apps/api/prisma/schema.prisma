@@ -23,7 +23,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:ikhela@db:5432/mentorat?schema=public&connect_timeout=800"
 }
 
 model User {
@@ -63,7 +63,6 @@ model Chats {
   id         Int      @id @default(autoincrement())
   name       String
   created_at DateTime @default(now())
-
   Messages Messages[] @relation("chatMessages")
   users    User[]
 }
@@ -80,7 +79,7 @@ model Messages {
   chat_id      Int
   user         User        @relation("userMessages", fields: [user_id], references: [id])
   chat         Chats       @relation("chatMessages", fields: [chat_id], references: [id])
-  like       Likes[]     @relation("messageLikes") 
+  like         Likes[]     @relation("messageLikes") 
 
 }
 
@@ -93,5 +92,4 @@ model Likes {
   user       User       @relation("userLikes", fields: [user_id], references: [id])
   created_at DateTime   @default(now())
   updated_at   DateTime @default(now())
-
 }

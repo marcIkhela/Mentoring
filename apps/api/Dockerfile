@@ -20,6 +20,7 @@ COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
 COPY --from=builder /app/apps/api/prisma ./prisma
 RUN npm install
+
 RUN npx prisma generate
 # RUN npx prisma db push
 
