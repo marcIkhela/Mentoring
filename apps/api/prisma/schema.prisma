@@ -23,7 +23,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:ikhela@db:5432/mentorat?schema=public&connect_timeout=800"
 }
 
 model User {
