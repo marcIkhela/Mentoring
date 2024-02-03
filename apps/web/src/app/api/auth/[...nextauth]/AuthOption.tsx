@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials, req) {
                 if (!credentials?.username || !credentials?.password) return null;
                 const { username, password } = credentials;
-                const res = await fetch(process.env.NEXt_API + "auth/login", {
+                const res = await fetch(process.env.NEXt_API + "/auth/login", {
                     method: "POST",
                     body: JSON.stringify({
                         username,

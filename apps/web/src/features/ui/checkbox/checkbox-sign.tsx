@@ -92,7 +92,7 @@ export const CheickBoxChoice: React.FC<checkbox> = () => {
       };
 
       // fetch("http://localhost:8000/auth/register", Options)
-      fetch(`${process.env.NEXt_API}auth/register`, Options)
+      fetch(`${process.env.NEXt_API}/auth/register`, Options)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
