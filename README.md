@@ -78,3 +78,15 @@ Add the following npm script to dockerized-full-stack-environment/nestjs-app/pac
     "start:back": "docker-compose up nestjs-app --renew-anon-volumes",
     "start:front": "docker-compose up nextjs-app --renew-anon-volumes",
     "clean": "docker-compose down -v"
+
+
+
+## for jenkins container
+
+Construction de Conteneurs : Jenkins peut être utilisé pour automatiser le processus de construction des images Docker. En montant le socket Docker, Jenkins peut utiliser le client Docker à l'intérieur du conteneur pour lancer des constructions d'images Docker.
+
+Déploiement de Conteneurs : Si votre processus de déploiement implique le déploiement de conteneurs Docker, Jenkins peut utiliser le client Docker dans le conteneur pour gérer ces déploiements. Cela peut être particulièrement utile dans un environnement où vous utilisez des conteneurs pour l'orchestration de services.
+
+Tests dans des Conteneurs : Si vous effectuez des tests dans des conteneurs Docker, Jenkins peut utiliser le client Docker pour créer, démarrer, arrêter et supprimer des conteneurs de test.
+
+Accès aux Fonctionnalités Docker : Le montage du socket Docker permet à Jenkins d'accéder à toutes les fonctionnalités du client Docker, ce qui peut être essentiel si vous avez des scénarios d'utilisation spécifiques qui nécessitent un accès direct aux fonctionnalités de Docker.

@@ -1,0 +1,35 @@
+version: "3"
+
+x-default: &defaults
+  networks: 
+    - ${NETWORK_CONTAINER}
+  env_file: 
+    - ./.env
+
+services: 
+  jenkins: 
+    image: ${JENKINS_IMG}
+    ports:  
+      - ${JENKINS_LOCAL_PORT}:${JENKINS_DOCKER_PORT}
+    <<: *defaults
+    volumes: 
+      - apps/jenkins-data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    
+volumes:
+  jenkins_home:
+
+networks:
+  app_network:
+    external: true
+    
+# # Start the my-jenkins-3 container
+# docker-compose up -d
+
+# # Get the initial admin password
+# docker exec my-jenkins-3 cat /var/jenkins_home/secrets/initialAdminPassword
+
+# # Confirm the my-jenkins-3 container is running
+# docker ps
+
+
