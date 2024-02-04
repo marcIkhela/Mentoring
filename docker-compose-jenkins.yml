@@ -1,32 +1,15 @@
-version: "3"
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+  ssh-agent:
+    image: jenkins/ssh-agent
 
-x-default: &defaults
-  networks: 
-    - app_network
-  env_file: 
-    - ./.env
-
-services: 
-  jenkins: 
-    container_name: my-jenkins-3
-    image: ${JENKINS_IMG}
-    privileged: true
-    user: root
-    ports:  
-      - 2377:2376
-      - 8083:8080
-      - 50003:50000
-    expose:
-      - 8083
-
-    <<: *defaults
-    volumes: 
-      - "jenkins_data:/var/jenkins_home"
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    
 volumes:
-  jenkins_data:
+  jenkins_home:
 
 networks:
   app_network:
-    external: true
