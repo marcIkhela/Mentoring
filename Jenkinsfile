@@ -19,8 +19,7 @@ pipeline {
         echo 'Deploying the application...'
       }
     }
-
-    // Email notification 
+ 
     stage('Email Notification'){
       steps {
         script{
@@ -31,8 +30,8 @@ pipeline {
           }
           // Send email notification 
           mail to: 'kankoffi36@gmail.com', 
-              body: "Pipeline ${currentBuild.result}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n\n${BUILD_URL}}"
-              subject: "Jenkins Build Notification - ${currentBuild.result}", 
+              body: "Pipeline ${currentBuild.result}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n\n${BUILD_URL}",
+              subject: "Jenkins Build Notification - ${currentBuild.result}"
         }
       }
     }
