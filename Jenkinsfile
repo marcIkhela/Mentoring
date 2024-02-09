@@ -23,15 +23,15 @@ pipeline {
     stage('Email Notification'){
       steps {
         script{
-          currentBuild.result = 'SUCCESS'
+          // currentBuild.result = 'SUCCESS'
 
-          if (currentBuild.resultIsBetterOrEqualTo('FAILURE')){
-            currentBuild.result = 'FAILURE'
-          }
+          // if (currentBuild.resultIsBetterOrEqualTo('FAILURE')){
+          //   currentBuild.result = 'FAILURE'
+          // }
           // Send email notification 
           mail to: 'kankoffi36@gmail.com', 
-              body: "Pipeline ${currentBuild.result}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n\n${BUILD_URL}",
-              subject: "Jenkins Build Notification - ${currentBuild.result}"
+               subject: "Jenkins Build Notification "
+               body: "Pipeline: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n\n${BUILD_URL}",
         }
       }
     }
