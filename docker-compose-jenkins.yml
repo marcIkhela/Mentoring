@@ -9,23 +9,38 @@ services:
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - app_network
   # ssh-agent:
   #   image: jenkins/ssh-agent
-  nginx:
-    container_name: nginx
-    image: 'jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-    volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
-    networks:
-      - app_network
+  # nginx:
+  #   container_name: nginx
+  #   image: 'jc21/nginx-proxy-manager:latest'
+  #   restart: unless-stopped
+  #   ports:
+  #     - '80:80'
+  #     - '81:81'
+  #     - '443:443'
+  #   volumes:
+  #     - ./data:/data
+  #     - ./letsencrypt:/etc/letsencrypt
+  #   networks:
+  #     - app_network
+
+  # add sonarcube for scanning code 
+  # sonarqube:
+  #   image: sonarqube
+  #   container_name: sonarqube-lab
+  #   ports:
+  #     - 9000:9000
+  #     - 9092:9092
+  #   environment:
+  #     - SONARQUBE_JDBC_USERNAME=sonar
+  #     - SONARQUBE_JDBC_PASSWORD=sonar
+  #   networks:
+  #     - net-devops
+
 
 volumes:
   jenkins_home:
