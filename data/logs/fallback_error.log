@@ -1,3 +1,16 @@
 2024/02/04 19:08:39 [warn] 291#291: 512 worker_connections are not enough, reusing connections
 2024/02/04 19:08:39 [alert] 291#291: 512 worker_connections are not enough
 2024/02/04 19:08:39 [error] 292#292: *842 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost-nginx-proxy-manager, request: "GET /favicon.ico HTTP/1.1", upstream: "http://127.0.0.1:80/favicon.ico", host: "80-ikhela04kk-mentoring-uu8uhvih0le.ws-eu108.gitpod.io", referrer: "https://80-ikhela04kk-mentoring-uu8uhvih0le.ws-eu108.gitpod.io/"
+2024/02/08 22:25:48 [error] 177#177: *1 "/var/www/html/github-webhook/index.html" is not found (2: No such file or directory), client: 172.18.0.1, server: localhost-nginx-proxy-manager, request: "GET /github-webhook/ HTTP/1.1", host: "localhost"
+2024/02/08 22:43:19 [warn] 177#177: 512 worker_connections are not enough, reusing connections
+2024/02/08 22:43:20 [alert] 177#177: 512 worker_connections are not enough
+2024/02/08 22:43:20 [error] 177#177: *683 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost-nginx-proxy-manager, request: "GET /favicon.ico HTTP/1.1", upstream: "http://127.0.0.1:80/favicon.ico", host: "localhost", referrer: "http://localhost/"
+2024/02/09 00:05:35 [alert] 156#156: cache manager process 185 exited on signal 9
+2024/02/09 00:05:35 [alert] 156#156: worker process 177 exited on signal 9
+2024/02/09 00:05:35 [alert] 156#156: worker process 178 exited on signal 9
+2024/02/09 00:05:35 [alert] 156#156: worker process 179 exited on signal 9
+2024/02/09 00:05:35 [alert] 156#156: worker process 180 exited on signal 9
+2024/02/09 00:05:35 [alert] 156#156: worker process 181 exited on signal 9
+2024/02/09 00:05:35 [alert] 156#156: worker process 182 exited on signal 9
+2024/02/09 00:05:35 [alert] 156#156: worker process 183 exited on signal 9
+2024/02/09 00:05:35 [alert] 156#156: worker process 184 exited on signal 9

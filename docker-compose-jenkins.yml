@@ -5,12 +5,15 @@ services:
     container_name: jenkins
     image: jenkins/jenkins:lts
     ports:
-      - "8080:8080"
+      - "8100:8080"
+      - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
+    networks:
+      - app_network
   # ssh-agent:
   #   image: jenkins/ssh-agent
-  nginx
+  nginx:
     container_name: nginx
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
@@ -21,6 +24,8 @@ services:
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - app_network
 
 volumes:
   jenkins_home:
