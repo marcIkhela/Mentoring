@@ -7,49 +7,48 @@ pipeline {
 
   environment{
     DOKCER_HUB_CREDENTIALS = credentials('mentoring-dockerhub')
-
   }
   stages {
     stage("build") {
       steps {
-        script{
+        // script{
             // Étape de construction de l'image avec docker-compose
             sh 'docker-compose -f docker-compose.yml build'
-        }
+        // }
       }
     }
     stage('login Docker hub') {
     steps {
-        script {
+        // script {
           // Connexion à Docker Hub
           withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIALS, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
             sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
         }
-      }
+      // }
     }
     }
   stage('tag docker image '){
     steps{
-      script{
+      // script{
         // Tag des images
         sh 'docker tag api-next:latest ikhela/mentoring:api-next'
         sh 'docker tag api-nest:latest ikhela/mentoring:api-nest'
-      }
+      // }
     }
   }
   stage('push docker image '){
     steps{
-      script{
+      // script{
         // Pousser les images taggées vers Docker Hub
         sh 'docker push ikhela/mentoring:api-next'
         sh 'docker push ikhela/mentoring:api-nest'
-      }
+      // }
     }
   }
 
     stage('Clean') {
       steps {
-          script{
+          // script{
             // Arrêter et supprimer les conteneurs liés à docker-compose
             /* groovylint-disable-next-line Indentation */
             sh 'docker-compose -f docker-compose.yml down --volumes --remove-orphans'
@@ -58,7 +57,7 @@ pipeline {
             sh 'docker image prune -f'
 
             sh "docker logout"
-          }
+          // }
        }
     }
    
