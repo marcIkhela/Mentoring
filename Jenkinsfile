@@ -22,7 +22,7 @@ pipeline {
    }
     stage("build") {  
       steps {
-          sh 'docker-compose -f docker-compose.yml build'
+          sh 'docker compose -f docker-compose.yml build'
       }
     }
     stage('login Docker hub') {
@@ -47,7 +47,7 @@ pipeline {
 
     stage('Clean') {
       steps {
-            sh 'docker-compose -f docker-compose.yml down --volumes --remove-orphans'
+            sh 'docker compose -f docker-compose.yml down --volumes --remove-orphans'
 
             // Supprimer les images locales non utilisées
             sh 'docker image prune -f'
