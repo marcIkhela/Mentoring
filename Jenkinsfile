@@ -1,15 +1,17 @@
 pipeline {
   agent any 
 
+  // environnement is not place inside the stage 
+  environment{
+    DOKCER_HUB_CREDENTIALS = credentials('mentoring-dockerhub')
+    }
   // options {
   //   buildDiscarder(logRotator(numToKeepStr: '5')) // 
   // }
   
  
   stages {
-    environment{
-    DOKCER_HUB_CREDENTIALS = credentials('mentoring-dockerhub')
-    }
+    
      stage("verify tooling") {
       steps {
         sh '''
@@ -20,10 +22,7 @@ pipeline {
    }
     stage("build") {  
       steps {
-        // script{
-            // Étape de construction de l'image avec docker-compose
-            sh 'docker-compose -f docker-compose.yml build'
-        // }
+          sh 'docker-compose -f docker-compose.yml build'
       }
     }
     stage('login Docker hub') {
