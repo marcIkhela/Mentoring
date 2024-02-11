@@ -4,6 +4,7 @@ pipeline {
   // options {
   //   buildDiscarder(logRotator(numToKeepStr: '5')) // 
   // }
+  stages{
    stage("verify tooling") {
       steps {
         sh '''
@@ -14,6 +15,7 @@ pipeline {
           jq --version
         '''
       }
+   }
     
 
   // environment{
