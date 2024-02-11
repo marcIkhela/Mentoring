@@ -2,7 +2,9 @@ version: "3"
 services:
   jenkins:
     container_name: jenkins
-    image: jenkins/jenkins:lts
+    build:
+      context: ./docker/jenkins
+      dockerfile: Dockerfile
     privileged: true
     ports:
       - "8100:8080"
@@ -11,7 +13,6 @@ services:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
-    # user: root
     restart: always
     networks:
       - app_network
