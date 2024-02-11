@@ -42,6 +42,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/${WEB_NAME}/Dockerfile
+    image: web-next:latest
     restart: always
     <<: *defaults
     ports:
@@ -55,6 +56,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/${API_NAME}/Dockerfile
+    image: api-nest:latest
     <<: *defaults
     depends_on:
       - db    

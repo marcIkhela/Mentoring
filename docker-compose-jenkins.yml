@@ -1,5 +1,4 @@
 version: "3"
-
 services:
   jenkins:
     container_name: jenkins
@@ -48,5 +47,3 @@ volumes:
 networks:
   app_network:
     external: true
-
-    
