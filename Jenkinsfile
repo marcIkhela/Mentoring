@@ -9,10 +9,7 @@ pipeline {
       steps {
         sh '''
           docker -v
-          docker compose version 
           docker-compose -v
-          curl --version
-          jq --version
         '''
       }
    }
