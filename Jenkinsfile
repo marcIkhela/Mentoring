@@ -9,7 +9,7 @@ pipeline {
       steps {
         sh '''
           docker -v
-          docker-compose -v
+          docker compose -v
         '''
       }
    }
