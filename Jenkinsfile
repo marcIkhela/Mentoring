@@ -22,7 +22,7 @@ pipeline {
   //   DOKCER_HUB_CREDENTIALS = credentials('mentoring-dockerhub')
   // }
   // stages {
-  //   stage("build") {
+  //   stage("build") {  
   //     steps {
   //       // script{
   //           // Étape de construction de l'image avec docker-compose
