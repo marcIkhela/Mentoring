@@ -24,3 +24,4 @@ RUN usermod -aG docker jenkins
 USER jenkins
 
 RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"
+

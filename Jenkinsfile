@@ -17,9 +17,9 @@ pipeline {
     
     stage("build") {  
       steps {
-        // sh 'docker compose docker-compose.yml build'
-        sh "docker build -t api-nest:latest apps/api/ "
-        sh "docker build -t api-next:latest apps/web/"
+        sh 'docker compose -f docker-compose.yml build'
+        // sh "docker build -t api-nest:latest apps/api/ "
+        // sh "docker build -t api-next:latest apps/web/"
       }
     }
 
