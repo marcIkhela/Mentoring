@@ -18,8 +18,6 @@ pipeline {
     stage("build") {  
       steps {
         sh 'docker compose -f docker-compose.yml build'
-        // sh "docker build -t api-nest:latest apps/api/ "
-        // sh "docker build -t api-next:latest apps/web/"
       }
     }
 
@@ -33,14 +31,14 @@ pipeline {
 
     stage('tag docker image '){
       steps{
-        sh 'docker tag api-next:latest ikhela/mentoring:api-next'
+        sh 'docker tag web-next:latest ikhela/mentoring:web-next'
         sh 'docker tag api-nest:latest ikhela/mentoring:api-nest'
       }
     }
 
     stage('push docker image '){
       steps{
-        sh 'docker push ikhela/mentoring:api-next'
+        sh 'docker push ikhela/mentoring:web-next'
         sh 'docker push ikhela/mentoring:api-nest'
       }
     }
@@ -49,7 +47,7 @@ pipeline {
       steps {
         // Supprimer les images locales non utilisées
         sh 'docker image rm api-nest:latest'
-        sh 'docker image rm app-next:latest'
+        sh 'docker image rm web-next:latest'
         sh "docker logout"
       }
     }
